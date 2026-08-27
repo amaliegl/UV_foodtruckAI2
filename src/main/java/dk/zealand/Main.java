@@ -1,15 +1,14 @@
 package dk.zealand;
 
+import dk.zealand.domain.Dish;
+import dk.zealand.service.MenuService;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    private static final String[] DISHES = {
-            "Festivalburger",
-            "Sprøde fritter",
-            "Vegansk bowl"
-    };
+    private static final MenuService MENU_SERVICE = new MenuService();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -23,9 +22,7 @@ public class Main {
 
             switch (choice) {
                 case "1" -> showDishes();
-                case "2" -> System.out.println(
-                        "Oprettelse af bestillinger er endnu ikke implementeret."
-                );
+                case "2" -> System.out.println("Oprettelse af bestillinger er endnu ikke implementeret.");
                 case "0" -> running = false;
                 default -> System.out.println(
                         "Ugyldigt valg. Vælg 0, 1 eller 2."
@@ -46,9 +43,10 @@ public class Main {
 
     private static void showDishes() {
         System.out.println("Retter:");
+        List<Dish> dishes = MENU_SERVICE.getDishes();
 
-        for (int i = 0; i < DISHES.length; i++) {
-            System.out.printf("%d. %s%n", i + 1, DISHES[i]);
+        for (int i = 0; i < dishes.size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, dishes.get(i).getDisplayName());
         }
     }
 }
